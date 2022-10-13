@@ -29,11 +29,11 @@ export default function ProyectionTable({ amount, projections, currencies }) {
                             <th className='text-center'>Tiempo</th>
                             <th className='text-center'>
                                 <img src={btcIcon} className="symbol-icon" alt=""/>
-                                <span className='ms-2'>BTC</span>
+                                <span className='ms-2'>BTC ({process.env.REACT_APP_BTC_INTEREST*100}%)</span>
                             </th>
                             <th className='text-center'>
                             <img src={ethIcon} className="symbol-icon" alt=""/>
-                            <span className='ms-2'>ETH</span>
+                            <span className='ms-2'>ETH ({process.env.REACT_APP_ETH_INTEREST*100}%)</span>
                                 </th>
                         </tr>
                     </thead>
@@ -42,8 +42,8 @@ export default function ProyectionTable({ amount, projections, currencies }) {
                             projections.map((projection, index) => (
                                 <tr key={index}>
                                     <td className='text-center'>Mes {projection.month}</td>
-                                    <td className='text-center'>{(currencies.BTC.rate) && `${projection.amount_btc} BTC`} </td>
-                                    <td className='text-center'>{(currencies.ETH.rate) && `${projection.amount_eth} ETH`} </td>
+                                    <td className='text-center'>{(currencies.BTC.rate) ? `${projection.amount_btc} BTC` : <span className='text-secondary'>Cargando...</span>} </td>
+                                    <td className='text-center'>{(currencies.ETH.rate) ? `${projection.amount_eth} ETH` : <span className='text-secondary'>Cargando...</span>} </td>
                                 </tr>
                             ))
                         }

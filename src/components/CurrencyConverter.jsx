@@ -48,7 +48,7 @@ export default function CurrencyConverter({ amount, from, to, setCurrencies }) {
             </>
 
           )
-          : <p>Cargando...</p>
+          : <p className='text-secondary'>Cargando...</p>
       }
     </div>
   )

@@ -5,8 +5,8 @@ import ProyectionTable from './ProyectionTable';
 export default function Simulador() {
     /* CONSTS */
     const MONTS = 12;
-    const BTC_INTEREST = 0.05;
-    const ETH_INTEREST = 0.03;
+    const BTC_INTEREST = process.env.REACT_APP_BTC_INTEREST;
+    const ETH_INTEREST = process.env.REACT_APP_ETH_INTEREST;
 
     /* STATES */
     const [amount, setAmount] = useState(100)
@@ -20,10 +20,12 @@ export default function Simulador() {
     useEffect(() => {
         const projectionsTemp = [];
         for (let index = 0; index < MONTS; index++) {
+            const price_btc = index == 0 ? currencies.BTC.rate : projectionsTemp[index - 1].amount_btc;
+            const price_eth = index == 0 ? currencies.ETH.rate : projectionsTemp[index - 1].amount_eth;
             projectionsTemp.push({
                 month: index + 1,
-                amount_btc: parseFloat(currencies.BTC.rate + (currencies.BTC.rate * ((index + 1) * BTC_INTEREST))).toFixed(9),
-                amount_eth: parseFloat(currencies.ETH.rate + (currencies.ETH.rate * ((index + 1) * ETH_INTEREST))).toFixed(9),
+                amount_btc: (price_btc + (price_btc * BTC_INTEREST)),
+                amount_eth: (price_eth + (price_eth * ETH_INTEREST)),
             })
         }
         setProjections(projectionsTemp)
@@ -40,7 +42,7 @@ export default function Simulador() {
             <div className='card'>
                 <div className='card-body px-0'>
                     <p className='text-center'><b>Ingresa la cantidad a invertir en dolares</b></p>
-                    <div className='input-group mx-auto' style={{width:'fit-content'}}>
+                    <div className='input-group mx-auto' style={{ width: 'fit-content' }}>
                         <span className="input-group-text">$</span>
                         <input type="number" className='form-control text-center  simulador-input' onChange={changeAmount} value={amount} />
                         <span className="input-group-text" >USD</span>
@@ -56,11 +58,11 @@ export default function Simulador() {
                     </div>
                 </div>
             </div>
-        <div className="row">
-            <div className="col-12">
-                <ProyectionTable projections={projections} amount={amount} currencies={currencies}></ProyectionTable>
+            <div className="row">
+                <div className="col-12">
+                    <ProyectionTable projections={projections} amount={amount} currencies={currencies}></ProyectionTable>
+                </div>
             </div>
-        </div>
         </>
     )
 }
