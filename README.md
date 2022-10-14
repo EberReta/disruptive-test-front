@@ -13,5 +13,7 @@ React app to simulate inversión in BTC and ETH from USD.
 The env file have the variables to make run the api. The env variables are: 
 
 **REACT_APP_WSS_URL**: The url to binance websocket.
+
 **REACT_APP_BTC_INTEREST**: This interest to apply to BTC.
+
 **REACT_APP_ETH_INTEREST**: The interest to aply to ETH.
